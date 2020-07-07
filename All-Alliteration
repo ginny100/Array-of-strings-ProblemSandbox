@@ -1,0 +1,99 @@
+/* An alliteration is when every word in a group begins with the same letter.
+ * Implement a solution that checks if the group of words forms an alliteration (that all of the words start with the same letter).
+ * Return true when they form an alliteration and false if they are not.
+ * Example:
+ * Given: ["pack","peck","pickled","peppers"]
+ * Return: True
+ * 
+ * Given: ["mary","had","a","little","lamb"]
+ * Return: False
+ */
+ 
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+
+/*
+ * Complete the 'isAlliteration' function below.
+ *
+ * The function is expected to return a BOOLEAN.
+ * The function accepts STRING_ARRAY words as parameter.
+ * Check if each word in words starts with the same 
+ * letter and return true or false accordingly. 
+ *
+ * Input: array of strings
+ * Output: True/False
+ * 
+ * Find the first character of the first string of the array
+ * Store it in a variable named: first
+ * Loop through the entire array and compare the first character of each word with "first"
+ * If they're different, return false. Else, the loop continues
+ * outside the loop, return true
+ */
+
+bool isAlliteration(vector<string> words) 
+{
+    string word = words[0];
+    char first = words[0][0];
+
+    for(int i = 1; i < words.size(); i++)
+    {
+        if(words[i][0]!=first)
+            return false;
+    }
+    return true;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string words_count_temp;
+    getline(cin, words_count_temp);
+
+    int words_count = stoi(ltrim(rtrim(words_count_temp)));
+
+    vector<string> words(words_count);
+
+    for (int i = 0; i < words_count; i++) {
+        string words_item;
+        getline(cin, words_item);
+
+        words[i] = words_item;
+    }
+
+    bool result = isAlliteration(words);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) 
+{
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) 
+{
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
