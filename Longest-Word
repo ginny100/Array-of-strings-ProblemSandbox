@@ -1,0 +1,110 @@
+/* Given an array of string, return the longest word */
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+
+/*
+ * Complete the 'longestWord' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts STRING_ARRAY words as parameter.
+ * This function will go through an array of strings, 
+ * identify the largest word, and return that word. 
+ *
+ * Input: Array of Strings
+ * Output: string
+ * 
+ * Split an array of strings into strings. 
+ * Split each string into substrings (words).
+ * Compare the size of each word in each string.
+ * Store the longer word in a variable
+ */
+
+string longestWord(vector<string> words) 
+{
+    string str = "";
+    vector <string> strWords;
+    string currentWord;
+    string longer = "";
+    int i;
+    int k;
+    str = words[0];
+    //Iterate each element of an array
+    for (i = 0; i < words.size(); i++)
+    { 
+        //Split each words[i] into words
+        for (k = 0; k < words[i].length(); k++)
+        {
+            if (words[i][k] != ' ')
+            {
+                currentWord += words[i][k];
+            }
+            else 
+            {
+                if (currentWord.length() > longer.length())
+                {
+                    longer = currentWord;
+                }
+                currentWord = "";
+            }
+        }
+        if (currentWord != "" && currentWord.length() > longer.length())
+        {
+            longer = currentWord;
+        }
+        currentWord = "";
+    }
+    return longer;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string words_count_temp;
+    getline(cin, words_count_temp);
+
+    int words_count = stoi(ltrim(rtrim(words_count_temp)));
+
+    vector<string> words(words_count);
+
+    for (int i = 0; i < words_count; i++) {
+        string words_item;
+        getline(cin, words_item);
+
+        words[i] = words_item;
+    }
+
+    string result = longestWord(words);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
