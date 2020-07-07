@@ -1,0 +1,102 @@
+/* You're given a stream of logging statements for a server as a list. Your product manager wants to know which messages indicate an error and which ones do not, to count the error, and return the number of errors.
+ * For example:
+ * Given:
+ * ['[WARNING] 403 Forbidden: No token in request parameters','[ERROR] 500 Server Error: int is not subscriptable','[INFO] 200 Login Successful','[INFO] 200 User sent a message','[ERROR] 500 Server Error: int is not subscriptable']
+ * Return: 3
+ * Hint: Loglines with value 200 or less are NOT errors.
+ */
+ 
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+
+/*
+ * Complete the 'countErrors' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts STRING_ARRAY logs as parameter.
+ * Check the logs string array for errors and return
+ * the numbers of error messages. 
+ *
+ * Input: array of strings
+ * Output: Int
+ * 
+ * Outter loop splits the input into strings
+ * Inner loop splits each string into words and processes the loglines
+ *      Loop through each string to find the value (index: 1) and store it in a string variable
+ *      Convert that string number into an int
+ *      Compare that int with 200
+ *      if it's greater than 200
+ *          error += 1
+ */
+
+int countErrors(vector<string> logs) 
+{
+    int error = 0;
+    vector <string> logline_words;
+    int i = 0;
+    //Outter loop splits the input into loglines
+    for(i = 0; i < logs.size(); i++)
+    {
+        if (logs[i][1] != 'I')
+        {
+            error += 1;
+        }
+    }
+    return error;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string logs_count_temp;
+    getline(cin, logs_count_temp);
+
+    int logs_count = stoi(ltrim(rtrim(logs_count_temp)));
+
+    vector<string> logs(logs_count);
+
+    for (int i = 0; i < logs_count; i++) 
+    {
+        string logs_item;
+        getline(cin, logs_item);
+
+        logs[i] = logs_item;
+    }
+
+    int result = countErrors(logs);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) 
+{
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) 
+{
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
