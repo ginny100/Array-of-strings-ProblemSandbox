@@ -1,0 +1,51 @@
+/* Given an array of string, calculate the sum of the string's ASCII values.*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/*
+ * Complete the 'summate' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts STRING vals as parameter.
+ * The function will summate the ASCII values of
+ * the characters in the string it accepts as a
+ * parameter. 
+ *
+ * Input: String
+ * Output: Int
+ *
+ * Loop through the string
+ * Use .size() to calculate the size of the input string
+ * Convert each char into an associated ASCII value which    
+ * is an int
+ * Store this value in a variable. Each time we get a new value from a new character that we have converted, we add   * it to the variable
+ * To convert a character into an ASCII value, use int(c)
+ * 
+ */
+
+int summate(string vals) 
+{
+    int sum = 0;
+    for(int i = 0; i < vals.size(); i++)
+    {
+        sum += int(vals[i]);
+    }
+    return sum;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string vals;
+    getline(cin, vals);
+
+    int result = summate(vals);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
