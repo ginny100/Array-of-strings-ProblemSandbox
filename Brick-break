@@ -1,0 +1,86 @@
+/* Given a string with spaces and dashes, and an index value.
+ * If the character in the string at the specified index is a "-", transforma it into a space. Otherwise, leave it alone.
+ * Metaphorically, the index is the "ball" and it "breaks" the "brick" if the break is there.
+ * For example:
+ * brickBreak(" ---- -",2) -> " - -- -"
+ */
+ 
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+
+/*
+ * Complete the 'brickBreak' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts following parameters:
+ *  1. STRING bricks
+ *  2. INTEGER ball
+ * This function will check the string at the 
+ * index specified by the ball. If there is a
+ * brick ("-") in that index, it will be replaced
+ * with a space. Otherwise, nothing will be altered. 
+ * 
+ * Input: String made up from dashes and spaces
+ *        A number
+ * Output: A string after process
+ * 
+ * Replace bricks[ball] with a space
+ */
+
+string brickBreak(string bricks, int ball) 
+{
+    if (ball <= bricks.length())
+    {
+        bricks[ball] = ' ';
+    }
+    return bricks;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string bricks;
+    getline(cin, bricks);
+
+    string ball_temp;
+    getline(cin, ball_temp);
+
+    int ball = stoi(ltrim(rtrim(ball_temp)));
+
+    string result = brickBreak(bricks, ball);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) 
+{
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) 
+{
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
