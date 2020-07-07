@@ -1,4 +1,9 @@
 /* Given an array of string, return the longest word */
+/* Example
+ * Given: ["hello elephants","hi bugs","yo snakes"]
+ * Return: elephants
+ */
+ 
 #include <bits/stdc++.h>
 
 using namespace std;
